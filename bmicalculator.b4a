@@ -1,0 +1,93 @@
+﻿Build1=Default,b4a.example
+File1=laypout.bal
+FileGroup1=Default Group
+Group=Default Group
+Library1=core
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="28"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.DarkTheme)~\n~'End of default text.~\n~
+Module1=Starter
+NumberOfFiles=1
+NumberOfLibraries=1
+NumberOfModules=1
+Version=9.8
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: BMI Calculator
+	#VersionCode: 1
+	#VersionName: 
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: False
+#End Region
+
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+
+End Sub
+Sub Globals
+	Private edtHeight As EditText
+	Private edtWeight As EditText
+	Private btnCalculate As Button
+	Private lblResult As Label
+End Sub
+
+
+Sub Activity_Create(FirstTime As Boolean)
+	Activity.LoadLayout("laypout") ' بارگذاری طرح بندی اصلی
+
+	' تعریف رویداد کلیک دکمه Calculate
+End Sub
+Sub btnCalculate_Click
+	Dim height As Float
+	Dim weight As Float
+	Dim result As String
+	Dim bmi As Float
+
+	lblResult.Gravity = Bit.Or(Gravity.CENTER, Gravity.CENTER_HORIZONTAL)
+	If (edtWeight.Text.Length = 0 Or edtHeight.Text.Length = 0) Then
+		lblResult.Text = "لطفاً قد و وزن خود را وارد کنید."
+	Else
+		' دریافت قد و وزن از ورودی کاربر
+		height = edtHeight.Text
+		weight = edtWeight.Text
+		
+        
+		' محاسبه BMI
+		bmi = weight / (Power((height / 100), 2))
+        
+		' تعیین نتیجه بر اساس BMI
+		If bmi < 18.5 Then
+			result = "کمبود وزن"
+		Else If bmi >= 18.5 And bmi < 25 Then
+			result = "نرمال"
+		Else If bmi >= 25 And bmi < 30 Then
+			result = "اضافه وزن"
+		Else
+			result = "چاقی"
+		End If
+        
+		' نمایش نتیجه
+		lblResult.Text = "BMI: " & bmi & ", وضعیت: " & result
+	End If
+End Sub
+
+
+
+
+Sub Activity_Resume
+	' کدهایی که باید در هنگام بازگشت به برنامه اجرا شوند در اینجا قرار می‌گیرند
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+	' کدهایی که باید در هنگام تعلیق برنامه اجرا شوند در اینجا قرار می‌گیرند
+End Sub
+
+
+Sub lblResult_Click
+	
+End Sub
